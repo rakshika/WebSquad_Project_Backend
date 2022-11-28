@@ -1,7 +1,14 @@
-import usersModel from "./users-model";
+import usersModel from "./users-model.js";
 
 export const createUser = (user) => {
     usersModel.create(user)
+}
+
+export const register = async (user) => {
+    const existingUser = await findUserByUsername(user.username)
+    if (existingUser) {
+        
+    }
 }
 
 export const findAllUsers = () => {
