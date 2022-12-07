@@ -38,37 +38,42 @@ const updateUser = async (req, res) => {
 
 const register = async (req,res) => {
     const user = req.body
-    const existingUser = await findUserByUsername(user.username)
+    const existingUser = await findUserByUsername(user.userName)
+   
     if (existingUser) {
-        res.status(403)
+        res.sendStatus(403)
         return
     }
     const userToCreate = await dao.createUser(user)
+    // req.session['currentUser'] = userToCreate
     currentUser = userToCreate
     res.json(userToCreate)
 }
 
 const login = async (req,res) => {
     const credentials = req.body
-    const existingUser = await findUserByCreds(credentials.username, credentials.password)
+    const existingUser = await findUserByCreds(credentials.userName, credentials.password)
     if (!existingUser) {
         res.sendStatus(403)
         return
     }
+    // req.session['currentUser'] = existingUser
     currentUser = existingUser
     res.json(existingUser)
 }
 
-const profile = async (req,res) => {
-    if (currentUser) {
-        res.json(currentUser)
-        return
+const profile = (req,res) => {
+    if (req.session['currentUser']) {
+        // res.send(req.session(['currentUser']))
+        res.send(currentUser)
     }
-    res.sendStatus(403)
+    else {
+        res.sendStatus(403)
+    }
 }
 
 const logout = (req,res) => {
-    currentUser = null
+    req.session.destroy()
     res.sendStatus(200)
 }
 

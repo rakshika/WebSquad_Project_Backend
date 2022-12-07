@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import usersController from "./users/users-controller.js"
 import cors from 'cors'
 
-// mongoose.connect('mongodb://localhost:27017/cs5610-fa22', options);
+mongoose.connect('mongodb://localhost:27017/WebSquad');
 
 const app = express()
 app.use(cors())

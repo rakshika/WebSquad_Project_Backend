@@ -2,13 +2,7 @@ import usersModel from "./users-model.js";
 
 export const createUser = (user) => {
     usersModel.create(user)
-}
-
-export const register = async (user) => {
-    const existingUser = await findUserByUsername(user.username)
-    if (existingUser) {
-        
-    }
+    return user
 }
 
 export const findAllUsers = () => {
@@ -19,13 +13,15 @@ export const findUserById = (uid) => {
     usersModel.findById(uid)
 }
 
-export const findUserByUsername = (uname) => {
-    usersModel.findOne({uname})
+export const findUserByUsername = (userName) => {
+    const user = usersModel.findOne({userName})
+    return user
 }
 
-export const findUserByCreds = (username, password) => {
-    usersModel.findOne({username, password},
+export const findUserByCreds = (userName, password) => {
+    const user = usersModel.findOne({userName, password},
         {password: false})
+        return user
 }
 
 export const deleteUser = (uid) => {
