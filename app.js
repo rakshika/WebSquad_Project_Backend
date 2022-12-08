@@ -1,4 +1,3 @@
-import UserController from './controllers/users/userprofile-controller.js';
 import SearchController from './controllers/search/search-controller.js';
 import express from "express"
 import mongoose from 'mongoose'
