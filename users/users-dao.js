@@ -6,11 +6,11 @@ export const createUser = (user) => {
 }
 
 export const findAllUsers = () => {
-    usersModel.find()
+    return usersModel.find()
 }
 
 export const findUserById = (uid) => {
-    usersModel.findById(uid)
+    return usersModel.findById(uid)
 }
 
 export const findUserByUsername = (userName) => {
@@ -25,7 +25,7 @@ export const findUserByCreds = (userName, password) => {
 }
 
 export const deleteUser = (uid) => {
-    usersModel.deleteOne({_id: uid})
+    return usersModel.deleteOne({_id: uid})
 }
 
 export const updateUser = (uid, userUpdate) => {

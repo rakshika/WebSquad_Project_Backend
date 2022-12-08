@@ -10,12 +10,11 @@ const findAllUsers = async (req,res) => {
     res.json(users)
 }
 
-// const findUserById = (req, res) => {
-//     const userId = req.params.uid;
-//     const user = users
-//       .find(u => u._id === userId);
-//     res.json(user);
-// }
+const findUserById = async (req, res) => {
+    const userId = req.params.uid;
+    const user = await dao.findUserById(userId)
+    res.json(user);
+}
 
 const createUser = async (req, res) => {
     const newUser = req.body;
@@ -29,12 +28,12 @@ const deleteUser = async (req, res) => {
     res.json(status);
 }
   
-const updateUser = async (req, res) => {
-    const userId = req.params.uid;
-    const updates = req.body;
-    const status = await dao.updateUser(userId, updates)
-    res.json(status);
-}
+// const updateUser = async (req, res) => {
+//     const userId = req.params.uid;
+//     const updates = req.body;
+//     const status = await dao.updateUser(userId, updates)
+//     res.json(status);
+// }
 
 const register = async (req,res) => {
     const user = req.body
@@ -62,15 +61,15 @@ const login = async (req,res) => {
     res.json(existingUser)
 }
 
-const profile = (req,res) => {
-    if (req.session['currentUser']) {
-        // res.send(req.session(['currentUser']))
-        res.send(currentUser)
-    }
-    else {
-        res.sendStatus(403)
-    }
-}
+// const profile = (req,res) => {
+//     if (req.session['currentUser']) {
+//         // res.send(req.session(['currentUser']))
+//         res.send(currentUser)
+//     }
+//     else {
+//         res.sendStatus(403)
+//     }
+// }
 
 const logout = (req,res) => {
     req.session.destroy()
@@ -81,13 +80,13 @@ const usersController = (app) => {
 
     app.post('/users', createUser)
     app.get('/users', findAllUsers)
-    // app.get('/users/:uid', findUserById);
+    app.get('/users/:uid', findUserById);
     app.delete('/users/:uid', deleteUser)
-    app.put('/users/:uid', updateUser)
+    // app.put('/users/:uid', updateUser)
 
     app.post('/register', register)
     app.post('/login', login)
-    app.post('/profile', profile)
+    // app.post('/profile', profile)
     app.post('/logout', logout)
 }
 
