@@ -10,3 +10,4 @@ app.use(cors())
 app.use(express.json());
 usersController(app)
 app.listen(4000)
+
