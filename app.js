@@ -6,11 +6,13 @@ import cors from 'cors'
 import DonorController from "./controllers/donors/donor-controller.js";
 mongoose.connect('mongodb://localhost:27017/WebSquad');
 
+import OrderController from "./controllers/orders/order-controller.js";
 const app = express()
 app.use(cors())
 app.use(express.json());
 
 SearchController(app);
+OrderController(app)
 DonorController(app)
 usersController(app)
 app.listen(4000)
