@@ -56,12 +56,11 @@ const register = async (req,res) => {
     const userToCreate = await dao.createUser(user)
     // req.session['currentUser'] = userToCreate
     currentUser = userToCreate
-    console.log("userToCreate")
-    console.log(userToCreate._id)
     res.json({
         userName: userToCreate.userName,
         email: userToCreate.email,
-        token: generateToken(userToCreate._id)
+        token: generateToken(userToCreate._id),
+        role: userToCreate.role
     })
 }
 
@@ -72,13 +71,12 @@ const login = async (req,res) => {
         res.sendStatus(403)
         return
     }
-    console.log("existingUser._id")
-    console.log(existingUser._id)
     // req.session['currentUser'] = existingUser
     currentUser = existingUser
-    console.log("req.user in login controller")
-    console.log(req.user)
-    res.json(existingUser)
+    res.json({userName: existingUser.userName,
+        email: existingUser.email,
+        token: generateToken(existingUser._id),
+        role: existingUser.role})
 }
 
 // const profile = (req,res) => {
@@ -104,14 +102,14 @@ const usersController = (app) => {
     app.delete('/users/:uid', deleteUser)
     app.put('/users/:uid', updateUser)
 
-    app.post('/register', protect, register)
-    app.post('/login', protect, login)
+    app.post('/register', register)
+    app.post('/login', login)
     // app.post('/profile', profile)
     app.post('/logout', logout)
 }
 
 const generateToken = (id) => {
-    return jwt.sign({id}, "abc123", {expiresIn: '30d'})
+    return jwt.sign({id}, process.env.TOKEN_SECRET, {expiresIn: '30d'})
 }
 
 export default usersController;

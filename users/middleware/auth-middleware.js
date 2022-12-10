@@ -11,8 +11,6 @@ const protect = asyncHandler(async(req, res, next) => {
         try {
             token = req.headers.authorization.split(' ')[1]
             const decoded = jwt.verify(token, "abc123")
-            console.log("decoded id") 
-            console.log(decoded.id)
             req.user = await usersModel.findById(decoded.id).select('-password')
             console.log("req.user in middleware")
             console.log(req.user)
