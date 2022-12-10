@@ -109,7 +109,7 @@ const usersController = (app) => {
 }
 
 const generateToken = (id) => {
-    return jwt.sign({id}, process.env.TOKEN_SECRET, {expiresIn: '30d'})
+    return jwt.sign({id}, "abc123", {expiresIn: '30d'})
 }
 
 export default usersController;
