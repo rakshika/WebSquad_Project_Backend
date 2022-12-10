@@ -7,7 +7,8 @@ import CustomerController from './controllers/customers/customers-controller.js'
 import DonorController from "./controllers/donors/donor-controller.js";
 import OrderController from "./controllers/orders/order-controller.js";
 
-mongoose.connect('mongodb://127.0.0.1:27017/HungerSaviors');
+// mongoose.connect('mongodb://127.0.0.1:27017/HungerSaviors');
+mongoose.connect('mongodb+srv://websquad:websquad123@websquad.npi2zdt.mongodb.net/HungerSaviors?retryWrites=true&w=majority')
 
 const app = express()
 app.use(cors())

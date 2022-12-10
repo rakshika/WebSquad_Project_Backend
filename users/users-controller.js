@@ -33,7 +33,7 @@ const createUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     const userId = req.params.uid;
-    const status = await dao.deleteUser(userId) //req.user.id
+    const status = await dao.deleteUser(req.user.id) //req.user.id
     res.json(status);
 }
   
@@ -73,7 +73,8 @@ const login = async (req,res) => {
     }
     // req.session['currentUser'] = existingUser
     currentUser = existingUser
-    res.json({userName: existingUser.userName,
+    res.json({ _id: existingUser._id,
+        userName: existingUser.userName,
         email: existingUser.email,
         token: generateToken(existingUser._id),
         role: existingUser.role})
@@ -90,7 +91,8 @@ const login = async (req,res) => {
 // }
 
 const logout = (req,res) => {
-    req.session.destroy()
+    // req.session.destroy()
+    req.user = null
     res.sendStatus(200)
 }
 
@@ -99,7 +101,7 @@ const usersController = (app) => {
     app.post('/users', createUser)
     app.get('/users', findAllUsers)
     app.get('/users/:uid', findUserById);
-    app.delete('/users/:uid', deleteUser)
+    app.delete('/users/:uid', protect, deleteUser)
     app.put('/users/:uid', updateUser)
 
     app.post('/register', register)
