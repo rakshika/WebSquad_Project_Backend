@@ -1,0 +1,32 @@
+{
+  "type": "module",
+  "name": "websquad-project-server-node",
+  "version": "1.0.0",
+  "description": "Backend for Web Squad project using Node and Express.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rakshika/WebSquad_Project_Backend.git"
+  },
+  "keywords": [
+    "Node",
+    "Express",
+    "REST",
+    "HTTP"
+  ],
+  "author": "Soundarya, Rakshika, Haritha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rakshika/WebSquad_Project_Backend/issues"
+  },
+  "homepage": "https://github.com/rakshika/WebSquad_Project_Backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mongoose": "^6.8.0"
+  }
+}
