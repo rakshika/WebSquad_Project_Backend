@@ -111,7 +111,7 @@ const usersController = (app) => {
 }
 
 const generateToken = (id) => {
-    return jwt.sign({id}, "abc123", {expiresIn: '30d'})
+    return jwt.sign({id}, "abcd1234", {expiresIn: '5m'})
 }
 
 export default usersController;
