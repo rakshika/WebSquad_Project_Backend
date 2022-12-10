@@ -28,6 +28,7 @@ const deleteDonor = async (req, res) => {
 }
 
 const DonorController = (app) => {
+    console.log('donors')
     app.get('/api/donors', findDonors);
     app.get('/api/donors/:did', findDonorById);
     app.post('/api/donors', createDonor);

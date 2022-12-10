@@ -25,8 +25,7 @@ const customersSchema = mongoose.Schema({
   previousorders: String,
   favorites: String,
   previousorderslist: String,
-  favoriteslist: String,
-  role: {type: String, enum: ['ADMIN', 'DONOR', 'CUSTOMER']}
+  favoriteslist: String
 }, {collection: 'customers'})
 
 export default customersSchema
