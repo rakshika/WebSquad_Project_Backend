@@ -1,8 +1,7 @@
 import usersModel from "./users-model.js";
 
 export const createUser = (user) => {
-    usersModel.create(user)
-    return user
+    return usersModel.create(user)
 }
 
 export const findAllUsers = () => {
@@ -28,6 +27,6 @@ export const deleteUser = (uid) => {
     return usersModel.deleteOne({_id: uid})
 }
 
-export const updateUser = (uid, userUpdate) => {
-    usersModel.updateOne({_id: uid}, {$set: userUpdate})
-}
+export const updateUser = (uid, userUpdates) =>
+    usersModel.updateOne({_id: uid},
+        {$set: userUpdates})

@@ -1,6 +1,10 @@
 // import everyone from './users.js'
 import * as dao from './users-dao.js'
 import {findUserByCreds, findUserByUsername} from './users-dao.js'
+import jwt from 'jsonwebtoken';
+import { json } from 'express';
+import protect from './middleware/auth-middleware.js'
+
 
 let currentUser = null
 
@@ -13,7 +17,12 @@ const findAllUsers = async (req,res) => {
 const findUserById = async (req, res) => {
     const userId = req.params.uid;
     const user = await dao.findUserById(userId)
-    res.json(user);
+    //if (user != res.user) throw error
+    if(user) {
+        res.json(user);
+        return
+    }
+    res.sendStatus(404)
 }
 
 const createUser = async (req, res) => {
@@ -24,16 +33,16 @@ const createUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     const userId = req.params.uid;
-    const status = await dao.deleteUser(userId)
+    const status = await dao.deleteUser(userId) //req.user.id
     res.json(status);
 }
   
-// const updateUser = async (req, res) => {
-//     const userId = req.params.uid;
-//     const updates = req.body;
-//     const status = await dao.updateUser(userId, updates)
-//     res.json(status);
-// }
+const updateUser = async (req, res) => {
+    const uid = req.params.uid
+    const updates = req.body
+    const status = await dao.updateUser(uid,  updates)
+    res.json(status)
+}
 
 const register = async (req,res) => {
     const user = req.body
@@ -43,10 +52,16 @@ const register = async (req,res) => {
         res.sendStatus(403)
         return
     }
+
     const userToCreate = await dao.createUser(user)
     // req.session['currentUser'] = userToCreate
     currentUser = userToCreate
-    res.json(userToCreate)
+    res.json({
+        userName: userToCreate.userName,
+        email: userToCreate.email,
+        token: generateToken(userToCreate._id),
+        role: userToCreate.role
+    })
 }
 
 const login = async (req,res) => {
@@ -58,7 +73,10 @@ const login = async (req,res) => {
     }
     // req.session['currentUser'] = existingUser
     currentUser = existingUser
-    res.json(existingUser)
+    res.json({userName: existingUser.userName,
+        email: existingUser.email,
+        token: generateToken(existingUser._id),
+        role: existingUser.role})
 }
 
 // const profile = (req,res) => {
@@ -82,12 +100,16 @@ const usersController = (app) => {
     app.get('/users', findAllUsers)
     app.get('/users/:uid', findUserById);
     app.delete('/users/:uid', deleteUser)
-    // app.put('/users/:uid', updateUser)
+    app.put('/users/:uid', updateUser)
 
     app.post('/register', register)
     app.post('/login', login)
     // app.post('/profile', profile)
     app.post('/logout', logout)
+}
+
+const generateToken = (id) => {
+    return jwt.sign({id}, "abc123", {expiresIn: '30d'})
 }
 
 export default usersController;
