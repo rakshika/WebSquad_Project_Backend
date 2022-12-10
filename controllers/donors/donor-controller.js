@@ -7,9 +7,9 @@ const findDonors = async (req, res) => {
     const donors = await donorsDao.findDonors()
     res.json(donors);
 }
-const findDonorById = async (req, res) => {
+const findDonorByUsername = async (req, res) => {
     const donorIdToUpdate = req.params.did;
-    const donor = await donorsDao.findDonorById(donorIdToUpdate);
+    const donor = await donorsDao.findDonorByUserName(donorIdToUpdate);
     res.json(donor);
 }
 const createDonor = async (req, res) => {
@@ -30,7 +30,7 @@ const deleteDonor = async (req, res) => {
 const DonorController = (app) => {
     console.log('donors')
     app.get('/api/donors', findDonors);
-    app.get('/api/donors/:did', findDonorById);
+    app.get('/api/donors/:did', findDonorByUsername);
     app.post('/api/donors', createDonor);
     app.delete('/api/donors/:did', deleteDonor);
     app.put('/api/donors/:did', updateDonor);
