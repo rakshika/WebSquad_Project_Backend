@@ -22,8 +22,8 @@ const createOrder = async (req, res) => {
 
 const OrderController = (app) => {
     app.get('/api/orders', findOrders);
-    app.get('/api/ordersDonor/:did', findOrderByDonorId);
-    app.get('/api/ordersCustomer/:cid', findOrderByCustomerId);
+    app.get('/api/orders/ordersDonor/:did', findOrderByDonorId);
+    app.get('/api/orders/ordersCustomer/:cid', findOrderByCustomerId);
     app.post('/api/orders', createOrder);
 }
 
