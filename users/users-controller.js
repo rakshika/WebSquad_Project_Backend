@@ -33,7 +33,7 @@ const createUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     const userId = req.params.uid;
-    const status = await dao.deleteUser(userId) //req.user.id
+    const status = await dao.deleteUser(req.user.id) //req.user.id
     res.json(status);
 }
   
@@ -67,13 +67,16 @@ const register = async (req,res) => {
 const login = async (req,res) => {
     const credentials = req.body
     const existingUser = await findUserByCreds(credentials.userName, credentials.password)
+    console.log('existingUser: ', existingUser);
     if (!existingUser) {
-        res.sendStatus(403)
+        res.status(403).send('User does not exist')
         return
+        
     }
     // req.session['currentUser'] = existingUser
     currentUser = existingUser
-    res.json({userName: existingUser.userName,
+    res.json({ _id: existingUser._id,
+        userName: existingUser.userName,
         email: existingUser.email,
         token: generateToken(existingUser._id),
         role: existingUser.role})
@@ -90,7 +93,8 @@ const login = async (req,res) => {
 // }
 
 const logout = (req,res) => {
-    req.session.destroy()
+    // req.session.destroy()
+    req.user = null
     res.sendStatus(200)
 }
 
@@ -99,7 +103,7 @@ const usersController = (app) => {
     app.post('/users', createUser)
     app.get('/users', findAllUsers)
     app.get('/users/:uid', findUserById);
-    app.delete('/users/:uid', deleteUser)
+    app.delete('/users/:uid', protect, deleteUser)
     app.put('/users/:uid', updateUser)
 
     app.post('/register', register)
@@ -109,7 +113,7 @@ const usersController = (app) => {
 }
 
 const generateToken = (id) => {
-    return jwt.sign({id}, "abc123", {expiresIn: '30d'})
+    return jwt.sign({id}, "abcd1234", {expiresIn: '5m'})
 }
 
 export default usersController;
