@@ -67,9 +67,11 @@ const register = async (req,res) => {
 const login = async (req,res) => {
     const credentials = req.body
     const existingUser = await findUserByCreds(credentials.userName, credentials.password)
+    console.log('existingUser: ', existingUser);
     if (!existingUser) {
-        res.sendStatus(403)
+        res.status(403).send('User does not exist')
         return
+        
     }
     // req.session['currentUser'] = existingUser
     currentUser = existingUser
