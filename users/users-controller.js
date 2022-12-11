@@ -46,6 +46,7 @@ const updateUser = async (req, res) => {
 
 const register = async (req,res) => {
     const user = req.body
+    console.log('user in register controller: ', user);
     const existingUser = await findUserByUsername(user.userName)
    
     if (existingUser) {
@@ -53,13 +54,14 @@ const register = async (req,res) => {
         return
     }
 
+
     const userToCreate = await dao.createUser(user)
     // req.session['currentUser'] = userToCreate
     currentUser = userToCreate
     res.json({
         userName: userToCreate.userName,
         email: userToCreate.email,
-        token: generateToken(userToCreate._id),
+        token: generateToken(userToCreate.userName),
         role: userToCreate.role
     })
 }
@@ -78,7 +80,7 @@ const login = async (req,res) => {
     res.json({ _id: existingUser._id,
         userName: existingUser.userName,
         email: existingUser.email,
-        token: generateToken(existingUser._id),
+        token: generateToken(existingUser.userName),
         role: existingUser.role})
 }
 
@@ -112,8 +114,8 @@ const usersController = (app) => {
     app.post('/logout', logout)
 }
 
-const generateToken = (id) => {
-    return jwt.sign({id}, "abcd1234", {expiresIn: '5m'})
+const generateToken = (userName) => {
+    return jwt.sign({userName}, "abcd1234", {expiresIn: '5m'})
 }
 
 export default usersController;
