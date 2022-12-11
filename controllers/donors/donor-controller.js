@@ -1,10 +1,8 @@
-// import donors from './donors.js';
-// let donor = donors
-// console.log(donor)
 import * as donorsDao from '../donors/donors-dao.js';
 
 const findDonors = async (req, res) => {
-    const donors = await donorsDao.findDonors()
+    const donorStatus = req.params.status;
+    const donors = await donorsDao.findDonors(donorStatus)
     res.json(donors);
 }
 const findDonorByUsername = async (req, res) => {
@@ -12,8 +10,10 @@ const findDonorByUsername = async (req, res) => {
     const donor = await donorsDao.findDonorByUserName(donorIdToUpdate);
     res.json(donor);
 }
-const createDonor = async (req, res) => {
-
+const approveDonor = async (req, res) => {
+    const donorIdToUpdate = req.params.did;
+    const status = await donorsDao.approveDonor(donorIdToUpdate);
+    res.json(status);
 }
 const updateDonor = async (req, res) => {
     const donorIdToUpdate = req.params.did;
@@ -28,10 +28,10 @@ const deleteDonor = async (req, res) => {
 }
 
 const DonorController = (app) => {
-    console.log('donors')
-    app.get('/api/donors', findDonors);
+    app.get('/api/donors/status/:status', findDonors);
     app.get('/api/donors/:did', findDonorByUsername);
-    app.post('/api/donors', createDonor);
+    // app.post('/api/donors', createDonor);
+    app.patch('/api/donors/approve/:did', approveDonor);
     app.delete('/api/donors/:did', deleteDonor);
     app.put('/api/donors/:did', updateDonor);
 }
