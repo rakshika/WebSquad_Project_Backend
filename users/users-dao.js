@@ -1,6 +1,14 @@
-import usersModel from "./users-model.js";
+import usersModel from "./schema/users-model.js";
+import donorsModel from "./schema/donors-model.js";
+import customersModel from "./schema/customers-model.js";
 
 export const createUser = (user) => {
+    console.log('user in dao: ', user);
+    if (user.role == 'DONOR') {
+        donorsModel.create(user)
+    } else if (user.role == 'CUSTOMER') {
+        customersModel.create(user)
+    }
     return usersModel.create(user)
 }
 
