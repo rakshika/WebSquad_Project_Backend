@@ -2,7 +2,6 @@
 import * as dao from './users-dao.js'
 import {findUserByCreds, findUserByUsername} from './users-dao.js'
 import jwt from 'jsonwebtoken';
-import { json } from 'express';
 import protect from './middleware/auth-middleware.js'
 
 

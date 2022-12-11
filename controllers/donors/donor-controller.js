@@ -1,4 +1,5 @@
 import * as donorsDao from '../donors/donors-dao.js';
+import protect from '../../users/middleware/auth-middleware.js';
 
 const findDonors = async (req, res) => {
     const donorStatus = req.params.status;
