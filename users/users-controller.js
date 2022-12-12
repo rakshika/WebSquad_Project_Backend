@@ -98,7 +98,7 @@ const usersController = (app) => {
 
     app.post('/users', createUser)
     app.get('/users', findAllUsers)
-    app.get('/users/:uid', findUserById);
+    app.get('/users/:uid',protect, findUserById);
     app.delete('/users/:uid', deleteUser)
     app.put('/users/:uid', updateUser)
 
