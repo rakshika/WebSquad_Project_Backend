@@ -1,10 +1,10 @@
 import customersModel from "../../users/schema/customers-model.js"
 
 
-export const updateUser = (uid, userUpdates) => {
-console.log("uid: ", uid)
-console.log("userUpdates: ", userUpdates)
-customersModel.updateOne({userName: uid},
+export const updateUser = async (uid, userUpdates) => {
+        console.log('userUpdates: ', userUpdates);
+        console.log('uid: ', uid);
+return await customersModel.updateOne({userName: uid},
         {$set: userUpdates}) }
 
 

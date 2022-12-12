@@ -12,7 +12,6 @@ mongoose.connect('mongodb+srv://websquad:websquad123@websquad.npi2zdt.mongodb.ne
 const app = express()
 app.use(cors())
 app.use(express.json());
-console.log('hi');
 SearchController(app);
 OrderController(app)
 DonorController(app)
