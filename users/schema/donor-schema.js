@@ -13,7 +13,7 @@ const donorSchema = mongoose.Schema({
     role: String,
     dateOfBirth: Date,
     storeTimings: String,
-    inventory: Object,
+    inventory: {type: Object, default: {}},
     rating: String
 }, {collection: 'donors'})
 

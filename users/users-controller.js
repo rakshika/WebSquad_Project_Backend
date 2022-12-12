@@ -71,7 +71,6 @@ const login = async (req,res) => {
     if (!existingUser) {
         res.status(403).send('User does not exist')
         return
-        
     }
     // req.session['currentUser'] = existingUser
     currentUser = existingUser

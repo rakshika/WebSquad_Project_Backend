@@ -10,7 +10,7 @@ export const createUser = (user) => {
         user.description = "Money is not the only commodity that is fun to give. We can give time, we can give our expertise, we can give our love, or simply give a smile. What does that cost? The point is, none of us can ever run out of something worthwhile to give.",
         user.storeTimings = "9am - 5pm",
         user.rating = 0.0,
-        user.inventory = {"pizza": 2}
+        user.inventory = {"pizza": 0}
         donorsModel.create(user)
     } else if (user.role == 'CUSTOMER') {
         user.profilePhoto = 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fuser%2F&psig=AOvVaw3FWkfzEC7sBFqyOHlA9CsO&ust=1670833832239000&source=images&cd=vfe&ved=0CA4QjRxqFwoTCIiT3pmT8fsCFQAAAAAdAAAAABAE'
