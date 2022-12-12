@@ -45,7 +45,6 @@ const updateUser = async (req, res) => {
 
 const register = async (req,res) => {
     const user = req.body
-    console.log('user in register controller: ', user);
     const existingUser = await findUserByUsername(user.userName)
    
     if (existingUser) {
@@ -72,7 +71,6 @@ const login = async (req,res) => {
     if (!existingUser) {
         res.status(403).send('User does not exist')
         return
-        
     }
     // req.session['currentUser'] = existingUser
     currentUser = existingUser

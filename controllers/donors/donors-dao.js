@@ -1,4 +1,5 @@
-import donorsModel from './donors-model.js';
+import donorsModel from "../../users/schema/donors-model.js";
+
 export const findDonors = (donorStatus) => donorsModel.find({status: donorStatus});
 export const findDonorByUserName = (did) => donorsModel.findOne({userName: did});
 export const approveDonor = (did) => donorsModel.updateOne({_id: did}, {$set: {"status" : "Approved"}});
