@@ -21,9 +21,9 @@ const findCustomerById = async (req, res) => {
 }
 
 const findCustomerByUsername = async (req, res) => {
-    const username = req.params.username
-    console.log(username)
-    const customer = await customerDao.findUserByUsername(username)
+    const userName = req.params.userName
+    console.log(userName)
+    const customer = await customerDao.findUserByUsername(userName)
   
     console.log(customer);
     if (customer) {
@@ -45,7 +45,7 @@ const CustomerController = (app) =>{
   app.get('/api/customers/:uid', findCustomerById);
   app.put('/api/customers/:uid', updateCustomer);
   app.post('/api/customers/', createCustomer);
-  app.get('/api/customers/find/:username', findCustomerByUsername);
+  app.get('/api/customers/find/:userName', findCustomerByUsername);
 
 }
 

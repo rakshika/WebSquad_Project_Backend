@@ -14,7 +14,7 @@ export default [
       "likes":  5 ,    
       "posts": "reviews on past orders if any",   
       "phone":"user's phone number", 
-      "username":"hari",   
+      "userName":"hari",   
       "firstName":"user's first name",   
       "lastName":"user's last name",    
       "email":"user's email",   
