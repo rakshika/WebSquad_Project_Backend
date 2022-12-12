@@ -1,9 +1,11 @@
 import customersModel from "../../users/schema/customers-model.js"
 
 
-export const updateUser = (uid, userUpdates) =>
+export const updateUser = (uid, userUpdates) => {
+console.log("uid: ", uid)
+console.log("userUpdates: ", userUpdates)
 customersModel.updateOne({userName: uid},
-        {$set: userUpdates})
+        {$set: userUpdates}) }
 
 
 export const findAllUsers = () =>
