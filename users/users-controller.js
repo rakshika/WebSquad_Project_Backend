@@ -2,7 +2,6 @@
 import * as dao from './users-dao.js'
 import {findUserByCreds, findUserByUsername} from './users-dao.js'
 import jwt from 'jsonwebtoken';
-import { json } from 'express';
 import protect from './middleware/auth-middleware.js'
 
 
@@ -33,7 +32,7 @@ const createUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     const userId = req.params.uid;
-    const status = await dao.deleteUser(userId) //req.user.id
+    const status = await dao.deleteUser(req.user.id) //req.user.id
     res.json(status);
 }
   
@@ -53,13 +52,14 @@ const register = async (req,res) => {
         return
     }
 
+
     const userToCreate = await dao.createUser(user)
     // req.session['currentUser'] = userToCreate
     currentUser = userToCreate
     res.json({
         userName: userToCreate.userName,
         email: userToCreate.email,
-        token: generateToken(userToCreate._id),
+        token: generateToken(userToCreate.userName),
         role: userToCreate.role
     })
 }
@@ -67,15 +67,17 @@ const register = async (req,res) => {
 const login = async (req,res) => {
     const credentials = req.body
     const existingUser = await findUserByCreds(credentials.userName, credentials.password)
+    console.log('existingUser: ', existingUser);
     if (!existingUser) {
-        res.sendStatus(403)
+        res.status(403).send('User does not exist')
         return
     }
     // req.session['currentUser'] = existingUser
     currentUser = existingUser
-    res.json({userName: existingUser.userName,
+    res.json({ _id: existingUser._id,
+        userName: existingUser.userName,
         email: existingUser.email,
-        token: generateToken(existingUser._id),
+        token: generateToken(existingUser.userName),
         role: existingUser.role})
 }
 
@@ -90,7 +92,8 @@ const login = async (req,res) => {
 // }
 
 const logout = (req,res) => {
-    req.session.destroy()
+    // req.session.destroy()
+    req.user = null
     res.sendStatus(200)
 }
 
@@ -98,8 +101,13 @@ const usersController = (app) => {
 
     app.post('/users', createUser)
     app.get('/users', findAllUsers)
+<<<<<<< HEAD
     app.get('/users/:uid',protect, findUserById);
     app.delete('/users/:uid', deleteUser)
+=======
+    app.get('/users/:uid', findUserById);
+    app.delete('/users/:uid', protect, deleteUser)
+>>>>>>> 3ac6adef83eb65b3bfaa88a16b2a200aeef1152a
     app.put('/users/:uid', updateUser)
 
     app.post('/register', register)
@@ -108,8 +116,8 @@ const usersController = (app) => {
     app.post('/logout', logout)
 }
 
-const generateToken = (id) => {
-    return jwt.sign({id}, "abc123", {expiresIn: '30d'})
+const generateToken = (userName) => {
+    return jwt.sign({userName}, "abcd1234", {expiresIn: '5m'})
 }
 
 export default usersController;
