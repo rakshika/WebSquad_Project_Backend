@@ -101,15 +101,9 @@ const usersController = (app) => {
 
     app.post('/users', createUser)
     app.get('/users', findAllUsers)
-<<<<<<< HEAD
-    app.get('/users/:uid',protect, findUserById);
     app.delete('/users/:uid', deleteUser)
-=======
     app.get('/users/:uid', findUserById);
-    app.delete('/users/:uid', protect, deleteUser)
->>>>>>> 3ac6adef83eb65b3bfaa88a16b2a200aeef1152a
     app.put('/users/:uid', updateUser)
-
     app.post('/register', register)
     app.post('/login', login)
     // app.post('/profile', profile)
