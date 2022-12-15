@@ -11,10 +11,9 @@ const donorSchema = mongoose.Schema({
     status: {type: String, default: "Pending"},
     email: {type: String, required: true, unique:true},
     role: String,
-    dateOfBirth: Date,
     storeTimings: String,
     inventory: {type: Object, default: {}},
-    rating: String
+    rating: String, likes: Number, liked: Boolean
 }, {collection: 'donors'})
 
 export default donorSchema;
