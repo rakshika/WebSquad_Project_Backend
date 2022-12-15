@@ -10,10 +10,8 @@ const customerSchema = mongoose.Schema({
     posts: Array,
     phone: String,
     email: {type: String, required: true, unique:true},
-    likes: Number,
     role: String,
     dateOfBirth: Date,
-    previousorderslist: Object,
 }, {collection: 'customers'})
 
 export default customerSchema;
