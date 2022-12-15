@@ -55,7 +55,11 @@ const register = async (req,res) => {
 
     const userToCreate = await dao.createUser(user)
     // req.session['currentUser'] = userToCreate
-    currentUser = userToCreate
+
+    if (userToCreate.role != 'DONOR') {
+        currentUser = userToCreate
+    }
+    console.log("current user in controller: ", currentUser)
     res.json({
         userName: userToCreate.userName,
         email: userToCreate.email,
