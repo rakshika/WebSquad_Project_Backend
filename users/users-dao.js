@@ -10,6 +10,8 @@ export const createUser = (user) => {
         user.storeTimings = "9am - 5pm",
         user.rating = 0.0,
         user.inventory = {"pizza": 0}
+        user.likes = 0
+        user.liked = false
         donorsModel.create(user)
     } else if (user.role == 'CUSTOMER') {
         user.profilePhoto = 'profilePhoto.png'
