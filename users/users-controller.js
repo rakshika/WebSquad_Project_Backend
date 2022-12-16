@@ -64,13 +64,15 @@ const register = async (req,res) => {
         userName: userToCreate.userName,
         email: userToCreate.email,
         token: generateToken(userToCreate.userName),
-        role: userToCreate.role
+        role: userToCreate.role,
+        status: userToCreate.status
     })
 }
 
 const login = async (req,res) => {
     const credentials = req.body
     const existingUser = await findUserByCreds(credentials.userName, credentials.password)
+    console.log('existingUser: ', existingUser);
     if (!existingUser) {
         res.status(403).send('User does not exist')
         return
@@ -81,7 +83,8 @@ const login = async (req,res) => {
         userName: existingUser.userName,
         email: existingUser.email,
         token: generateToken(existingUser.userName),
-        role: existingUser.role})
+        role: existingUser.role,
+        status: existingUser.status})
 }
 
 // const profile = (req,res) => {
